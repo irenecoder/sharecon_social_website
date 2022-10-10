@@ -3,6 +3,6 @@ from . import views
 
 app_name='post'
 urlpatterns = [
-    path('',views.user_login,name="user-login"),
+    # path('',views.user_login,name="user-login"),
 
 ]
