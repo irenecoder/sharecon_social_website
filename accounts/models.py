@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -14,3 +15,9 @@ class Image(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self,*args,**kwargs):
+        #automatically generate the slug when no slug is provided
+        if not self.slug:
+            self.slug = slugify(self.title)
+            super().save(*args,**kwargs)
