@@ -1,2 +1,17 @@
 from django import forms
+from .models import Image
 
+class ImageCreateForms(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields=['title','url','description']
+        widgets = {'url':forms.HiddenInput}
+
+    def clean_url(self):
+        url = forms.cleaned_data['url']
+        valid_extensions = ['jpeg', 'jpg','png']
+        extension = url.rsplit('.',1)[1].lower()
+
+        if extension not in valid_extensions:
+            raise forms.ValidationError("The given url does not match valid image extensions")
+        return url
