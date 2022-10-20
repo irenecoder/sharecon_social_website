@@ -33,17 +33,17 @@ def dashboard(request):
 def user_registration(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
-        if user_form.is_valid:
+        if user_form.is_valid():
             new_user = user_form.save(commit=False)
             #set the chosen password
-            new_user.set_password(new_user.cleaned_data['password'])
+            new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
 
             return render(request,'accounts/register_done.html',{'new_user':new_user})
 
-        else:
-            user_form = UserRegistrationForm()
-        return render(request,'accounts/register.html',{'user_form':user_form})
+    else:
+        user_form = UserRegistrationForm()
+    return render(request,'accounts/register.html',{'user_form':user_form})
 
 
 
